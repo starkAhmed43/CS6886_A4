@@ -430,8 +430,19 @@ typedef struct {
 Metrics layer_metrics(const Stats *s, int num_images)
 {
     Metrics metrics = {0, 0, 0, 0, 0, 0};
-    /* YOUR CODE HERE */
-    (void)s; (void)num_images;
+    if (s->cycles == 0)
+        return metrics;
+
+    double cycles = (double)s->cycles / num_images;
+    double time_us = cycles / CLOCK_MHZ;
+    double energy_nj = s->energy_pj / 1000.0 / num_images;
+
+    metrics.cycles = cycles;
+    metrics.time_us = time_us;
+    metrics.utilization = (double)s->macs / ((double)NUM_PES * s->cycles);
+    metrics.macs_per_cycle = (double)s->macs / s->cycles;
+    metrics.energy_nj = energy_nj;
+    metrics.power_mw = energy_nj / time_us; /* nJ/us = mW */
     return metrics;
 }
 
