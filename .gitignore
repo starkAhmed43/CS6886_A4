@@ -1,0 +1,45 @@
+# macOS
+.DS_Store
+._*
+.AppleDouble
+.Spotlight-V100
+.Trashes
+
+# Build output
+/sparten
+*.o
+*.dSYM/
+a.out
+
+# Simulator output
+/roofline.csv
+/roofline.svg
+
+# Submission
+*.zip
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# LaTeX aux
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+*.toc
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*~
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# Experiment output
+results/bin/

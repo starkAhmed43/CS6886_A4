@@ -1,0 +1,55 @@
+E4 row 0 mask=0000 count=0
+E4 row 1 mask=0000 count=0
+E4 row 2 mask=0000 count=0
+E4 row 3 mask=0000 count=0
+E4 col 0 mask=01f0 count=5
+E4 col 1 mask=019f count=7
+E4 col 2 mask=01ac count=5
+E4 col 3 mask=01e9 count=6
+E4 PE 0,0 matches 0
+E4 PE 0,1 matches 0
+E4 PE 0,2 matches 0
+E4 PE 0,3 matches 0
+E4 PE 1,0 matches 0
+E4 PE 1,1 matches 0
+E4 PE 1,2 matches 0
+E4 PE 1,3 matches 0
+E4 PE 2,0 matches 0
+E4 PE 2,1 matches 0
+E4 PE 2,2 matches 0
+E4 PE 2,3 matches 0
+E4 PE 3,0 matches 0
+E4 PE 3,1 matches 0
+E4 PE 3,2 matches 0
+E4 PE 3,3 matches 0
+E4 slowest_pe_cycles=7 batch_bytes=103 memory_cycles=7
+SparTen MNIST: 16 PEs, tile 4 rows x 16 depth x 4 cols, 800 MHz, 1 images
+accuracy 1/1, matches golden predictions 1/1, check failures 0
+
+per image        GEMM rows x depth x cols  dense MACs  sparse MACs |        cycles   util  energy(nJ) power(mW)
+conv1 inner               784 x 9 x 8       56448         5750 |          3541  10.1%        13.7       3.1
+conv2 inner             196 x 72 x 16      225792        48819 |         13927  21.9%       115.1       6.6
+fc1   inner              1 x 784 x 32       25088         3257 |          5025   4.1%         7.7       1.2
+fc2   inner               1 x 32 x 10         320          103 |            85   7.6%         0.2       2.3
+total inner                                307648        57929 |         22578  16.0%       136.7       4.8
+
+conv1 outer               784 x 9 x 8       56448         5750 |          4526   7.9%        14.6       2.6
+conv2 outer             196 x 72 x 16      225792        48819 |         17640  17.3%       123.8       5.6
+fc1   outer              1 x 784 x 32       25088         3257 |          3865   5.3%         8.4       1.7
+fc2   outer               1 x 32 x 10         320          103 |            67   9.6%         0.3       3.1
+total outer                                307648        57929 |         26098  13.9%       147.2       4.5
+
+roofline: peak 32 ops/cycle, 16 bytes/cycle, ridge at 2.0 ops/byte
+layer order  bytes/image  ops/byte  achieved  attainable  % of roof  memory-bound batches  bound
+conv1 inner        43230      0.27      3.25        4.26      76.3%             0.0%      memory
+conv2 inner        86338      1.13      7.01       18.09      38.7%             0.0%      memory
+fc1   inner        13065      0.50      1.30        7.98      16.2%             0.0%      memory
+fc2   inner          303      0.68      2.42       10.88      22.3%             0.0%      memory
+total inner       142936      0.81      5.13       12.97      39.6%             0.0%      memory
+conv1 outer        51070      0.23      2.54        3.60      70.5%            65.8%      memory
+conv2 outer       227458      0.43      5.54        6.87      80.6%            10.8%      memory
+fc1   outer        46521      0.14      1.69        2.24      75.2%             0.0%      memory
+fc2   outer          715      0.29      3.07        4.61      66.7%             0.0%      memory
+total outer       325764      0.36      4.44        5.69      78.0%            20.6%      memory
+wrote roofline.csv and roofline.svg
+sanity check: no impossible values found (this does not prove the values are right)

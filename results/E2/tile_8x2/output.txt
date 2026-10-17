@@ -1,0 +1,30 @@
+SparTen MNIST: 16 PEs, tile 8 rows x 16 depth x 2 cols, 800 MHz, 100 images
+accuracy 100/100, matches golden predictions 100/100, check failures 0
+
+per image        GEMM rows x depth x cols  dense MACs  sparse MACs |        cycles   util  energy(nJ) power(mW)
+conv1 inner               784 x 9 x 8       56448         6995 |          3963  11.0%        16.6       3.4
+conv2 inner             196 x 72 x 16      225792        48659 |         13479  22.6%       114.7       6.8
+fc1   inner              1 x 784 x 32       25088         3315 |          8910   2.3%         7.8       0.7
+fc2   inner               1 x 32 x 10         320           91 |           132   4.3%         0.2       1.3
+total inner                                307648        59062 |         26483  13.9%       139.4       4.2
+
+conv1 outer               784 x 9 x 8       56448         6995 |          4601   9.5%        17.8       3.1
+conv2 outer             196 x 72 x 16      225792        48659 |         19809  15.4%       123.4       5.0
+fc1   outer              1 x 784 x 32       25088         3315 |          6972   3.0%         8.8       1.0
+fc2   outer               1 x 32 x 10         320           91 |           100   5.7%         0.2       1.9
+total outer                                307648        59062 |         31481  11.7%       150.2       3.8
+
+roofline: peak 32 ops/cycle, 16 bytes/cycle, ridge at 2.0 ops/byte
+layer order  bytes/image  ops/byte  achieved  attainable  % of roof  memory-bound batches  bound
+conv1 inner        42864      0.33      3.53        5.22      67.6%             0.0%      memory
+conv2 inner       123002      0.79      7.22       12.66      57.0%             0.0%      memory
+fc1   inner        17963      0.37      0.74        5.91      12.6%             0.0%      memory
+fc2   inner          336      0.54      1.38        8.67      15.9%             0.0%      memory
+total inner       184166      0.64      4.46       10.26      43.5%             0.0%      memory
+conv1 outer        49136      0.28      3.04        4.56      66.7%            24.5%      memory
+conv2 outer       261274      0.37      4.91        5.96      82.4%            27.5%      memory
+fc1   outer        75723      0.09      0.95        1.40      67.9%             0.0%      memory
+fc2   outer          996      0.18      1.83        2.93      62.5%             0.0%      memory
+total outer       387130      0.31      3.75        4.88      76.9%            17.0%      memory
+wrote roofline.csv and roofline.svg
+sanity check: no impossible values found (this does not prove the values are right)

@@ -317,6 +317,9 @@ void load_tile(const Matrix *A, const Matrix *B, int row0, int depth0, int col0,
  *     written to C. */
 void gemm_inner(const Matrix *A, const Matrix *B, Matrix *C)
 {
+#ifdef E4_TRACE
+    static int traced = 0;
+#endif
     for (int row0 = 0; row0 < A->rows; row0 += TILE_ROWS)
         for (int col0 = 0; col0 < B->cols; col0 += TILE_COLS) {
             int sums[TILE_ROWS][TILE_COLS];
@@ -335,6 +338,20 @@ void gemm_inner(const Matrix *A, const Matrix *B, Matrix *C)
                     encode(column, TILE_DEPTH, &cols[c]);
                 }
 
+#ifdef E4_TRACE
+                int e4_trace = !traced && row0 == 0 && col0 == 0 && depth0 == 0;
+                if (e4_trace) {
+                    for (int r = 0; r < TILE_ROWS; r++)
+                        printf("E4 row %d mask=%04x count=%d\n", r, rows[r].mask, rows[r].count);
+                    for (int c = 0; c < TILE_COLS; c++)
+                        printf("E4 col %d mask=%04x count=%d\n", c, cols[c].mask, cols[c].count);
+                    for (int r = 0; r < TILE_ROWS; r++)
+                        for (int c = 0; c < TILE_COLS; c++)
+                            if (row0 + r < A->rows && col0 + c < B->cols)
+                                printf("E4 PE %d,%d matches %d\n", r, c,
+                                       __builtin_popcount(rows[r].mask & cols[c].mask));
+                }
+#endif
                 start_batch();
                 for (int r = 0; r < TILE_ROWS; r++)
                     for (int c = 0; c < TILE_COLS; c++)
@@ -354,6 +371,18 @@ void gemm_inner(const Matrix *A, const Matrix *B, Matrix *C)
                                 bytes += PSUM_BYTES;
                 count_bytes(bytes);
                 end_batch();
+#ifdef E4_TRACE
+                if (e4_trace) {
+                    int slowest_pe = 0;
+                    for (int pe = 0; pe < NUM_PES; pe++)
+                        if (pe_cycles[pe] > slowest_pe)
+                            slowest_pe = pe_cycles[pe];
+                    long memory_cycles = (batch_bytes + BYTES_PER_CYCLE - 1) / BYTES_PER_CYCLE;
+                    printf("E4 slowest_pe_cycles=%d batch_bytes=%ld memory_cycles=%ld\n",
+                           slowest_pe, batch_bytes, memory_cycles);
+                    traced = 1;
+                }
+#endif
             }
             for (int r = 0; r < TILE_ROWS; r++)
                 for (int c = 0; c < TILE_COLS; c++)

@@ -1,0 +1,43 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='720' height='480' font-family='Helvetica, Arial, sans-serif' font-size='12'>
+<rect width='100%' height='100%' fill='#ffffff'/>
+<text x='80' y='28' font-size='15' fill='#14171c'>Roofline: 16 PEs, tile 4 x 16 x 4, 16 bytes/cycle</text>
+<line x1='80.0' y1='50' x2='80.0' y2='420' stroke='#e4e6ea'/>
+<line x1='80' y1='420.0' x2='690' y2='420.0' stroke='#e4e6ea'/>
+<text x='80.0' y='438' text-anchor='middle' fill='#555c66'>0.1</text>
+<text x='72' y='424.0' text-anchor='end' fill='#555c66'>0.1</text>
+<line x1='283.3' y1='50' x2='283.3' y2='420' stroke='#e4e6ea'/>
+<line x1='80' y1='296.7' x2='690' y2='296.7' stroke='#e4e6ea'/>
+<text x='283.3' y='438' text-anchor='middle' fill='#555c66'>1</text>
+<text x='72' y='300.7' text-anchor='end' fill='#555c66'>1</text>
+<line x1='486.7' y1='50' x2='486.7' y2='420' stroke='#e4e6ea'/>
+<line x1='80' y1='173.3' x2='690' y2='173.3' stroke='#e4e6ea'/>
+<text x='486.7' y='438' text-anchor='middle' fill='#555c66'>10</text>
+<text x='72' y='177.3' text-anchor='end' fill='#555c66'>10</text>
+<line x1='690.0' y1='50' x2='690.0' y2='420' stroke='#e4e6ea'/>
+<line x1='80' y1='50.0' x2='690' y2='50.0' stroke='#e4e6ea'/>
+<text x='690.0' y='438' text-anchor='middle' fill='#555c66'>100</text>
+<text x='72' y='54.0' text-anchor='end' fill='#555c66'>100</text>
+<text x='385' y='462' text-anchor='middle' fill='#14171c'>operational intensity (ops per byte)</text>
+<text transform='translate(22 235) rotate(-90)' text-anchor='middle' fill='#14171c'>performance (ops per cycle)</text>
+<polyline fill='none' stroke='#14171c' stroke-width='2' points='80.0,271.5 344.5,111.0 690.0,111.0'/>
+<text x='352.5' y='103.0' fill='#555c66'>peak 32 ops/cycle</text>
+<text x='352.5' y='127.0' fill='#555c66'>ridge 2.0 ops/byte</text>
+<circle cx='166.4' cy='233.6' r='6' fill='#2a78d6'/>
+<text x='175.4' y='237.6' text-anchor='start' fill='#14171c'>conv1</text>
+<rect x='146.2' y='241.2' width='11' height='11' fill='#eb6834'/>
+<text x='142.7' y='261.7' text-anchor='end' fill='#14171c'>conv1</text>
+<circle cx='294.2' cy='192.4' r='6' fill='#2a78d6'/>
+<text x='303.2' y='196.4' text-anchor='start' fill='#14171c'>conv2</text>
+<rect x='203.2' y='199.5' width='11' height='11' fill='#eb6834'/>
+<text x='199.7' y='198.0' text-anchor='end' fill='#14171c'>conv2</text>
+<circle cx='221.9' cy='282.8' r='6' fill='#2a78d6'/>
+<text x='230.9' y='286.8' text-anchor='start' fill='#14171c'>fc1</text>
+<rect x='104.2' y='263.2' width='11' height='11' fill='#eb6834'/>
+<text x='100.7' y='283.7' text-anchor='end' fill='#14171c'>fc1</text>
+<circle cx='249.3' cy='249.3' r='6' fill='#2a78d6'/>
+<text x='258.3' y='253.3' text-anchor='start' fill='#14171c'>fc2</text>
+<rect x='167.9' y='231.0' width='11' height='11' fill='#eb6834'/>
+<text x='164.4' y='229.5' text-anchor='end' fill='#14171c'>fc2</text>
+<circle cx='100' cy='70' r='6' fill='#2a78d6'/><text x='112' y='74' fill='#14171c'>inner product</text>
+<rect x='94' y='84' width='11' height='11' fill='#eb6834'/><text x='112' y='94' fill='#14171c'>outer product</text>
+</svg>
