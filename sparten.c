@@ -277,8 +277,14 @@ void load_tile(const Matrix *A, const Matrix *B, int row0, int depth0, int col0,
 {
     memset(a, 0, sizeof(int) * TILE_ROWS * TILE_DEPTH);
     memset(b, 0, sizeof(int) * TILE_DEPTH * TILE_COLS);
-    /* YOUR CODE HERE */
-    (void)A; (void)B; (void)row0; (void)depth0; (void)col0;
+    for (int r = 0; r < TILE_ROWS; r++)
+        for (int d = 0; d < TILE_DEPTH; d++)
+            if (row0 + r < A->rows && depth0 + d < A->cols)
+                a[r][d] = AT(A, row0 + r, depth0 + d);
+    for (int d = 0; d < TILE_DEPTH; d++)
+        for (int c = 0; c < TILE_COLS; c++)
+            if (depth0 + d < B->rows && col0 + c < B->cols)
+                b[d][c] = AT(B, depth0 + d, col0 + c);
 }
 
 /* ======================================================================
