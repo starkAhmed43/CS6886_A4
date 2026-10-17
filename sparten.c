@@ -340,6 +340,19 @@ void gemm_inner(const Matrix *A, const Matrix *B, Matrix *C)
                     for (int c = 0; c < TILE_COLS; c++)
                         if (row0 + r < A->rows && col0 + c < B->cols)
                             sums[r][c] += pe_task_inner(r * TILE_COLS + c, &rows[r], &cols[c]);
+                long bytes = 0;
+                for (int r = 0; r < TILE_ROWS; r++)
+                    if (row0 + r < A->rows)
+                        bytes += vector_bytes(&rows[r]);
+                for (int c = 0; c < TILE_COLS; c++)
+                    if (col0 + c < B->cols)
+                        bytes += vector_bytes(&cols[c]);
+                if (depth0 + TILE_DEPTH >= A->cols)
+                    for (int r = 0; r < TILE_ROWS; r++)
+                        for (int c = 0; c < TILE_COLS; c++)
+                            if (row0 + r < A->rows && col0 + c < B->cols)
+                                bytes += PSUM_BYTES;
+                count_bytes(bytes);
                 end_batch();
             }
             for (int r = 0; r < TILE_ROWS; r++)
@@ -393,9 +406,20 @@ void gemm_outer(const Matrix *A, const Matrix *B, Matrix *C)
                 memset(sums, 0, sizeof(sums));
 
                 start_batch();
+                long bytes = 0;
                 for (int k = 0; k < TILE_DEPTH; k++)
-                    if (depth0 + k < A->cols)
+                    if (depth0 + k < A->cols) {
                         pe_task_outer(k, &a_cols[k], &b_rows[k], sums);
+                        bytes += vector_bytes(&a_cols[k]) + vector_bytes(&b_rows[k]);
+                    }
+                for (int r = 0; r < TILE_ROWS; r++)
+                    for (int c = 0; c < TILE_COLS; c++)
+                        if (row0 + r < A->rows && col0 + c < B->cols) {
+                            bytes += PSUM_BYTES;
+                            if (depth0 > 0)
+                                bytes += PSUM_BYTES;
+                        }
+                count_bytes(bytes);
                 end_batch();
 
                 for (int r = 0; r < TILE_ROWS; r++)
