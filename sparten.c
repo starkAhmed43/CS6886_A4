@@ -241,7 +241,23 @@ void lower_conv(const Layer *L, const Tensor *in, Matrix *A, Matrix *B)
     int depth = 9 * L->in_channels;
     *A = new_matrix(in->height * in->width, depth);
     *B = new_matrix(depth, L->out_channels);
-    /* YOUR CODE HERE */
+    for (int d = 0; d < depth; d++)
+        for (int k = 0; k < L->out_channels; k++)
+            AT(B, d, k) = L->weights[k * depth + d];
+    for (int y = 0; y < in->height; y++)
+        for (int x = 0; x < in->width; x++) {
+            int p = y * in->width + x;
+            for (int filter_row = 0; filter_row < 3; filter_row++)
+                for (int filter_col = 0; filter_col < 3; filter_col++) {
+                    int in_y = y + filter_row - 1, in_x = x + filter_col - 1;
+                    if (in_y < 0 || in_y >= in->height || in_x < 0 || in_x >= in->width)
+                        continue;
+                    for (int c = 0; c < L->in_channels; c++) {
+                        int d = (filter_row * 3 + filter_col) * L->in_channels + c;
+                        AT(A, p, d) = PIXEL(in, in_y, in_x, c);
+                    }
+                }
+        }
 }
 
 /* ======================================================================
