@@ -218,8 +218,11 @@ void lower_fc(const Layer *L, const Tensor *in, Matrix *A, Matrix *B)
 {
     *A = new_matrix(1, L->in_channels);
     *B = new_matrix(L->in_channels, L->out_channels);
-    /* YOUR CODE HERE */
-    (void)in;
+    for (int d = 0; d < L->in_channels; d++) {
+        AT(A, 0, d) = in->data[d];
+        for (int o = 0; o < L->out_channels; o++)
+            AT(B, d, o) = L->weights[o * L->in_channels + d];
+    }
 }
 
 /* TODO 2 - lower_conv: a 3x3 convolution as a GEMM (im2col).
