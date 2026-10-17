@@ -1,0 +1,99 @@
+config tile4x4_bw16 (tile 4 x 4, 16 bytes/cycle, 100 images)
+layer  order  batches       macs      ideal fill_drain barrier_wait idle_no_task accumulator memory_stall     cycles   balanced_bnd    mem_bound_batches
+conv1  inner      392       6995      437.2       2857.1        380.0         0.0          0.0        0.0        3674.3         3294.3                    0
+conv1  outer      392       6995      437.2       1603.4        501.7      1977.3          0.0      236.0        4755.5         2040.6                  235
+conv2  inner      980      48659     3041.2       7665.8       3278.8         0.0          0.0        0.0       13985.9        10707.1                    0
+conv2  outer      980      48659     3041.2       6736.4       6079.5      1465.2          0.0      272.7       17595.0         9777.7                  114
+fc1    inner      392       3315      207.2        739.4        317.3      3791.9          0.0        0.0        5055.8          946.7                    0
+fc1    outer      392       3315      207.2       2894.6        761.7         0.0          5.0        0.0        3868.6         3101.8                    0
+fc2    inner        6         91        5.7         10.0          1.4        63.4          0.0        0.0          80.4           15.7                    0
+fc2    outer        6         91        5.7         44.6         17.2         0.0          0.0        0.0          67.5           50.3                    0
+
+config tile1x16_bw16 (tile 1 x 16, 16 bytes/cycle, 100 images)
+layer  order  batches       macs      ideal fill_drain barrier_wait idle_no_task accumulator memory_stall     cycles   balanced_bnd    mem_bound_batches
+conv1  inner      784       6995      437.2       2857.1        114.0      3408.3          0.0        0.0        6816.6         3294.3                    0
+conv1  outer      784       6995      437.2       3165.7        489.3      3182.8          0.0      546.2        7821.2         3602.9                  546
+conv2  inner      980      48659     3041.2       7665.8       4358.5         0.0          0.0       68.0       15133.6        10707.1                   41
+conv2  outer      980      48659     3041.2       6815.6       4538.7      1446.1          0.0      901.4       16743.0         9856.9                  289
+fc1    inner       98       3315      207.2        739.4        502.4         0.0          0.0        0.0        1449.0          946.7                    0
+fc1    outer       98       3315      207.2        745.4        423.6         0.0          0.0      220.6        1596.8          952.6                   91
+fc2    inner        2         91        5.7         10.0          2.1        10.7          0.0        0.0          28.5           15.7                    0
+fc2    outer        2         91        5.7         15.0         11.2         0.0          0.0        0.0          31.9           20.6                    0
+
+config tile2x8_bw16 (tile 2 x 8, 16 bytes/cycle, 100 images)
+layer  order  batches       macs      ideal fill_drain barrier_wait idle_no_task accumulator memory_stall     cycles   balanced_bnd    mem_bound_batches
+conv1  inner      392       6995      437.2       2857.1        210.6         0.0          0.0      522.0        4026.9         3294.3                  261
+conv1  outer      392       6995      437.2       1589.9        440.9      1919.6          0.0      783.1        5170.8         2027.1                  261
+conv2  inner      980      48659     3041.2       7665.8       3845.8         0.0          0.0        0.0       14552.9        10707.1                    0
+conv2  outer      980      48659     3041.2       6817.5       5200.7      1450.1          0.0      393.2       16902.7         9858.8                  131
+fc1    inner      196       3315      207.2        739.4        419.7      1366.3          0.0        0.0        2732.7          946.7                    0
+fc1    outer      196       3315      207.2       1474.2        532.9         0.0          0.4       10.8        2225.6         1681.4                   10
+fc2    inner        4         91        5.7         10.0          1.6        35.5          0.0        0.0          52.8           15.7                    0
+fc2    outer        4         91        5.7         29.7         15.1         0.0          0.0        0.0          50.4           35.4                    0
+
+config tile8x2_bw16 (tile 8 x 2, 16 bytes/cycle, 100 images)
+layer  order  batches       macs      ideal fill_drain barrier_wait idle_no_task accumulator memory_stall     cycles   balanced_bnd    mem_bound_batches
+conv1  inner      392       6995      437.2       2857.1        668.4         0.0          0.0        0.0        3962.7         3294.3                    0
+conv1  outer      392       6995      437.2       1621.3        475.5      1970.9          0.0       96.0        4600.9         2058.5                   96
+conv2  inner     1000      48659     3041.2       7665.8       2556.9       214.9          0.0        0.0       13478.9        10707.1                    0
+conv2  outer     1000      48659     3041.2       6704.8       7445.4      1764.1          0.0      853.1       19808.7         9746.0                  275
+fc1    inner      784       3315      207.2        739.4        167.1      7796.3          0.0        0.0        8910.0          946.7                    0
+fc1    outer      784       3315      207.2       5675.0       1077.0         0.0         12.8        0.0        6972.1         5882.3                    0
+fc2    inner       10         91        5.7         10.0          0.8       115.3          0.0        0.0         131.8           15.7                    0
+fc2    outer       10         91        5.7         73.9         20.0         0.0          0.0        0.0          99.6           79.6                    0
+
+config tile16x1_bw16 (tile 16 x 1, 16 bytes/cycle, 100 images)
+layer  order  batches       macs      ideal fill_drain barrier_wait idle_no_task accumulator memory_stall     cycles   balanced_bnd    mem_bound_batches
+conv1  inner      392       6995      437.2       2857.1       1099.9         0.0          0.0        2.9        4397.1         3294.3                    2
+conv1  outer      392       6995      437.2       1631.6        483.7      1985.3          0.0        1.2        4539.0         2068.8                    1
+conv2  inner     1040      48659     3041.2       7665.8        977.8       582.2          0.0     2649.5       14916.6        10707.1                  712
+conv2  outer     1040      48659     3041.2       6810.9       9049.7      1788.5          0.0     2471.2       23161.5         9852.2                  623
+fc1    inner     1568       3315      207.2        739.4          0.0     14200.2          0.0        0.0       15146.9          946.7                    0
+fc1    outer     1568       3315      207.2      11183.2       1295.8         0.0         18.9        0.0       12705.2        11390.5                    0
+fc2    inner       20         91        5.7         10.0          0.0       235.4          0.0        0.0         251.1           15.7                    0
+fc2    outer       20         91        5.7        145.7         28.5         0.0          0.0        0.0         179.9          151.4                    0
+
+config tile4x4_bw4 (tile 4 x 4, 4 bytes/cycle, 100 images)
+layer  order  batches       macs      ideal fill_drain barrier_wait idle_no_task accumulator memory_stall     cycles   balanced_bnd    mem_bound_batches
+conv1  inner      392       6995      437.2       2857.1        380.0         0.0          0.0     7360.9       11035.3         3294.3                  392
+conv1  outer      392       6995      437.2       1603.4        501.7      1977.3          0.0     8475.7       12995.3         2040.6                  392
+conv2  inner      980      48659     3041.2       7665.8       3278.8         0.0          0.0     7903.6       21889.5        10707.1                  968
+conv2  outer      980      48659     3041.2       6736.4       6079.5      1465.2          0.0    39845.1       57167.5         9777.7                  980
+fc1    inner      392       3315      207.2        739.4        317.3      3791.9          0.0        3.0        5058.8          946.7                    2
+fc1    outer      392       3315      207.2       2894.6        761.7         0.0          5.0     7922.7       11791.2         3101.8                  392
+fc2    inner        6         91        5.7         10.0          1.4        63.4          0.0        5.8          86.2           15.7                    2
+fc2    outer        6         91        5.7         44.6         17.2         0.0          0.0      112.1         179.6           50.3                    6
+
+config tile4x4_bw8 (tile 4 x 4, 8 bytes/cycle, 100 images)
+layer  order  batches       macs      ideal fill_drain barrier_wait idle_no_task accumulator memory_stall     cycles   balanced_bnd    mem_bound_batches
+conv1  inner      392       6995      437.2       2857.1        380.0         0.0          0.0     1941.3        5615.6         3294.3                  391
+conv1  outer      392       6995      437.2       1603.4        501.7      1977.3          0.0     2352.1        6871.6         2040.6                  305
+conv2  inner      980      48659     3041.2       7665.8       3278.8         0.0          0.0      527.9       14513.8        10707.1                  193
+conv2  outer      980      48659     3041.2       6736.4       6079.5      1465.2          0.0    11518.0       28840.3         9777.7                  980
+fc1    inner      392       3315      207.2        739.4        317.3      3791.9          0.0        0.0        5055.8          946.7                    0
+fc1    outer      392       3315      207.2       2894.6        761.7         0.0          5.0     2124.8        5993.3         3101.8                  392
+fc2    inner        6         91        5.7         10.0          1.4        63.4          0.0        0.0          80.4           15.7                    0
+fc2    outer        6         91        5.7         44.6         17.2         0.0          0.0       24.0          91.5           50.3                    6
+
+config tile4x4_bw32 (tile 4 x 4, 32 bytes/cycle, 100 images)
+layer  order  batches       macs      ideal fill_drain barrier_wait idle_no_task accumulator memory_stall     cycles   balanced_bnd    mem_bound_batches
+conv1  inner      392       6995      437.2       2857.1        380.0         0.0          0.0        0.0        3674.3         3294.3                    0
+conv1  outer      392       6995      437.2       1603.4        501.7      1977.3          0.0        0.0        4519.6         2040.6                    0
+conv2  inner      980      48659     3041.2       7665.8       3278.8         0.0          0.0        0.0       13985.9        10707.1                    0
+conv2  outer      980      48659     3041.2       6736.4       6079.5      1465.2          0.0        0.0       17322.3         9777.7                    0
+fc1    inner      392       3315      207.2        739.4        317.3      3791.9          0.0        0.0        5055.8          946.7                    0
+fc1    outer      392       3315      207.2       2894.6        761.7         0.0          5.0        0.0        3868.5         3101.8                    0
+fc2    inner        6         91        5.7         10.0          1.4        63.4          0.0        0.0          80.4           15.7                    0
+fc2    outer        6         91        5.7         44.6         17.2         0.0          0.0        0.0          67.5           50.3                    0
+
+config tile4x4_bw64 (tile 4 x 4, 64 bytes/cycle, 100 images)
+layer  order  batches       macs      ideal fill_drain barrier_wait idle_no_task accumulator memory_stall     cycles   balanced_bnd    mem_bound_batches
+conv1  inner      392       6995      437.2       2857.1        380.0         0.0          0.0        0.0        3674.3         3294.3                    0
+conv1  outer      392       6995      437.2       1603.4        501.7      1977.3          0.0        0.0        4519.6         2040.6                    0
+conv2  inner      980      48659     3041.2       7665.8       3278.8         0.0          0.0        0.0       13985.9        10707.1                    0
+conv2  outer      980      48659     3041.2       6736.4       6079.5      1465.2          0.0        0.0       17322.3         9777.7                    0
+fc1    inner      392       3315      207.2        739.4        317.3      3791.9          0.0        0.0        5055.8          946.7                    0
+fc1    outer      392       3315      207.2       2894.6        761.7         0.0          5.0        0.0        3868.5         3101.8                    0
+fc2    inner        6         91        5.7         10.0          1.4        63.4          0.0        0.0          80.4           15.7                    0
+fc2    outer        6         91        5.7         44.6         17.2         0.0          0.0        0.0          67.5           50.3                    0
+

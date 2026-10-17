@@ -1,0 +1,31 @@
+Report Q8: batching fc1/fc2 images into one GEMM (tile 4 x 4, 16 bytes/cycle, 100 images)
+
+layer order    N   cycles/img    bytes/img energy(nJ)/img  batches    mem_bound_batches
+fc1   inner    1      5055.81     13122.36         7.8332    39200                    0
+fc1   inner    2      2621.35      9045.86         7.8332    19600                    0
+fc1   inner    4      1349.50      7007.61         7.8332     9800                    0
+fc1   inner    8      1349.50      7007.61         7.8332     9800                    0
+fc1   inner   16      1349.50      7007.61         7.8332     9800                    0
+fc1   outer    1      3868.58     46578.36         8.5760    39200                    4
+fc1   outer    2      2277.51     31525.86         8.4780    19600                 1206
+fc1   outer    4      1601.19     23999.61         8.4290     9800                 4673
+fc1   outer    8      1601.19     23999.61         8.4290     9800                 4673
+fc1   outer   16      1601.19     23999.61         8.4290     9800                 4673
+fc2   inner    1        80.44       297.78         0.2145      600                    0
+fc2   inner    2        41.67       197.78         0.2145      300                    0
+fc2   inner    4        21.20       147.78         0.2145      150                    0
+fc2   inner    8        21.20       147.78         0.2145      150                    0
+fc2   inner   16        21.20       147.78         0.2145      150                    0
+fc2   outer    1        67.48       709.78         0.2333      600                    0
+fc2   outer    2        42.78       437.78         0.2318      300                    0
+fc2   outer    4        30.16       301.78         0.2310      150                    0
+fc2   outer    8        30.16       301.78         0.2310      150                    0
+fc2   outer   16        30.16       301.78         0.2310      150                    0
+
+Whole-network inner-product cycles per image (conv1 + conv2 from E1, fc1 + fc2 batched):
+  N   total_cycles    speedup
+  1        22796.2      1.00x
+  2        20323.0      1.12x
+  4        19030.7      1.20x
+  8        19030.7      1.20x
+ 16        19030.7      1.20x

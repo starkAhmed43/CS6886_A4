@@ -1,0 +1,10 @@
+run-ahead estimate: one barrier per output tile instead of per batch
+inner product, tile 4 x 4, 16 bytes/cycle, 100 images
+
+layer   depth     D |     baseline    run_ahead  perfect_bal    mem_floor   compute_pk   speedup
+conv1       9     1 |       3674.3       3674.3       3294.3       2729.9        437.2     1.00x
+conv2      72     5 |      13985.9      13490.9      10707.1       5390.1       3041.2     1.04x
+fc1       784    49 |       5055.8       4734.1        946.7        820.1        207.2     1.07x
+fc2        32     2 |         80.4         78.3         15.7         18.6          5.7     1.03x
+total               |      22796.5      21977.6      14963.8       8958.8       3691.4     1.04x
+

@@ -45,3 +45,8 @@ done
 # E4: trace of the first gemm_inner batch.
 build e4 -DE4_TRACE -DNUM_IMAGES=1
 run e4 "$RESULTS_DIR/E4"
+
+"$REPO_DIR/analysis/breakdown.sh"
+"$REPO_DIR/analysis/fc_batching.sh"
+"$REPO_DIR/analysis/run_ahead.sh"
+conda run -n cs6886_a4 python "$REPO_DIR/analysis/plots.py"
