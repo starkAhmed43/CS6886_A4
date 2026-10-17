@@ -497,8 +497,17 @@ typedef struct {
 RooflinePoint roofline_point(const Stats *s)
 {
     RooflinePoint point = {0, 0, 0, 0};
-    /* YOUR CODE HERE */
-    (void)s;
+    if (s->bytes == 0 || s->cycles == 0)
+        return point;
+
+    double ops = 2.0 * s->macs;
+    double intensity = ops / s->bytes;
+    double memory_roof = BYTES_PER_CYCLE * intensity;
+
+    point.intensity = intensity;
+    point.achieved = ops / s->cycles;
+    point.attainable = memory_roof < PEAK_OPS_PER_CYCLE ? memory_roof : PEAK_OPS_PER_CYCLE;
+    point.memory_bound = memory_roof < PEAK_OPS_PER_CYCLE;
     return point;
 }
 
