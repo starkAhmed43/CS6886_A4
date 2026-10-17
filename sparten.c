@@ -374,8 +374,35 @@ void gemm_inner(const Matrix *A, const Matrix *B, Matrix *C)
  *     PSUM_BYTES read for each of those outputs. */
 void gemm_outer(const Matrix *A, const Matrix *B, Matrix *C)
 {
-    /* YOUR CODE HERE */
-    (void)A; (void)B; (void)C;
+    for (int depth0 = 0; depth0 < A->cols; depth0 += TILE_DEPTH)
+        for (int row0 = 0; row0 < A->rows; row0 += TILE_ROWS)
+            for (int col0 = 0; col0 < B->cols; col0 += TILE_COLS) {
+                int a[TILE_ROWS][TILE_DEPTH], b[TILE_DEPTH][TILE_COLS];
+                load_tile(A, B, row0, depth0, col0, a, b);
+
+                SparseVector a_cols[TILE_DEPTH], b_rows[TILE_DEPTH];
+                for (int k = 0; k < TILE_DEPTH; k++) {
+                    int column[TILE_ROWS];
+                    for (int r = 0; r < TILE_ROWS; r++)
+                        column[r] = a[r][k];
+                    encode(column, TILE_ROWS, &a_cols[k]);
+                    encode(b[k], TILE_COLS, &b_rows[k]);
+                }
+
+                int sums[TILE_ROWS][TILE_COLS];
+                memset(sums, 0, sizeof(sums));
+
+                start_batch();
+                for (int k = 0; k < TILE_DEPTH; k++)
+                    if (depth0 + k < A->cols)
+                        pe_task_outer(k, &a_cols[k], &b_rows[k], sums);
+                end_batch();
+
+                for (int r = 0; r < TILE_ROWS; r++)
+                    for (int c = 0; c < TILE_COLS; c++)
+                        if (row0 + r < A->rows && col0 + c < B->cols)
+                            AT(C, row0 + r, col0 + c) += sums[r][c];
+            }
 }
 
 /* ======================================================================
